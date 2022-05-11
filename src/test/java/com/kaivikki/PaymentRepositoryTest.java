@@ -4,8 +4,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.kaivikki.entities.Check;
-import com.kaivikki.entities.CreditCard;
+import com.kaivikki.entities.inheritance.Check;
+import com.kaivikki.entities.inheritance.CreditCard;
 import com.kaivikki.repositories.PaymentRepository;
 
 @SpringBootTest

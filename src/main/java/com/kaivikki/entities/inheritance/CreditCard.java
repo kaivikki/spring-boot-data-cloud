@@ -1,4 +1,4 @@
-package com.kaivikki.entities;
+package com.kaivikki.entities.inheritance;
 
 import javax.persistence.Entity;
 import javax.persistence.PrimaryKeyJoinColumn;
