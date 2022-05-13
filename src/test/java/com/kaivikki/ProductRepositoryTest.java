@@ -5,6 +5,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.EntityManager;
+
+import org.hibernate.Session;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -13,6 +16,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.kaivikki.entities.Product;
 import com.kaivikki.repositories.ProductRepository;
@@ -22,10 +26,10 @@ public class ProductRepositoryTest {
 
 	@Autowired
 	ProductRepository productRepository;
+	
+	@Autowired
+	EntityManager entityManager;
 
-	@Test
-	void contextLoads() {
-	}
 
 	@Test
 	public void testCreateProduct() {
@@ -138,5 +142,16 @@ public class ProductRepositoryTest {
 		result1.forEach(p->{
 			System.out.println(p.getProductName());
 		});
+	}
+	
+	@Test
+	@Transactional
+	public void testFirstLevelCache() {
+		Session session = entityManager.unwrap(Session.class);
+		Product product = productRepository.findById(2).get();
+		productRepository.findById(2).get();
+		session.evict(product);
+		System.out.println("After Product is evicted from session cache. New Select Query will be fired");
+		productRepository.findById(2).get();
 	}
 }
