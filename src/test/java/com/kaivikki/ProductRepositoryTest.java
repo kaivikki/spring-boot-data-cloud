@@ -93,7 +93,7 @@ public class ProductRepositoryTest {
 
 	@Test
 	public void testFindProductByName() {
-		productRepository.findByProductName("Iphone 13").forEach(p -> {
+		productRepository.findByProductName("TV").forEach(p -> {
 			System.out.println(p.getProductPrice());
 		});
 	}
