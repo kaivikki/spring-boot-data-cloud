@@ -28,7 +28,7 @@ public class ProductRepositoryTest {
 	ProductRepository productRepository;
 	
 	@Autowired
-	EntityManager entityManager;
+	EntityManager pgEntityManagerFactory;
 
 
 	@Test
@@ -147,7 +147,7 @@ public class ProductRepositoryTest {
 	@Test
 	@Transactional
 	public void testFirstLevelCache() {
-		Session session = entityManager.unwrap(Session.class);
+		Session session = pgEntityManagerFactory.unwrap(Session.class);
 		Product product = productRepository.findById(2).get();
 		productRepository.findById(2).get();
 		session.evict(product);
